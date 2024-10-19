@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 import { PrivyProvider } from '@privy-io/react-auth';
+import { base, flowTestnet, flowMainnet, baseGoerli, mainnet, sepolia, polygon, polygonMumbai } from 'viem/chains';
 
 import App from './App';
 
@@ -26,6 +27,10 @@ root.render(
         embeddedWallets: {
           createOnLogin: 'users-without-wallets',
         },
+
+        defaultChain: flowTestnet,
+        // Replace this with a list of your desired supported chains
+        supportedChains: [base, mainnet, flowTestnet, flowMainnet, sepolia, base, baseGoerli, polygon, polygonMumbai]
       }}
     >
       <App />
