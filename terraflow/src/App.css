@@ -1,49 +1,23 @@
-.modal-overlay {  
-  position: fixed;  
-  top: 0;  
-  left: 0;  
-  right: 0;  
-  bottom: 0;  
-  background-color: rgba(0, 0, 0, 0.5);  
-  display: flex;  
-  justify-content: center;  
-  align-items: center;  
-  z-index: 1000;  
-}  
-
-.modal-content {  
-  background-color: white;  
-  padding: 20px;  
-  border-radius: 10px;  
-  width: 400px;  
-  text-align: center;  
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  
-}
-
+/* Overall App styles */
 .App {  
   text-align: center;  
 }  
 
-.App-logo {  
-  height: 40vmin;  
-  pointer-events: none;  
-}
 .navbar {  
-  display: flex;  
-  align-items: center;  
-  background-color: white;  
-  padding: 10px 20px;  
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.0); /* Transparent background */
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000; 
 }  
 
 .logo {  
-  height: 50px; 
-}  
-
-@media (prefers-reduced-motion: no-preference) {  
-  .App-logo {  
-    animation: App-logo-spin infinite 20s linear;  
-  }  
+  height: 150px; 
 }  
 
 .App-header {  
@@ -55,26 +29,50 @@
   justify-content: center;  
   font-size: calc(10px + 2vmin);  
   color: white;  
-}  
+}
 
-.App-link {  
-  color: #61dafb;  
-}  
+/* Nav Links */
+.nav-links {
+  display: flex;
+  gap: 1px;
+  list-style: none;
+  margin: 0;
+}
 
-@keyframes App-logo-spin {  
-  from {  
-    transform: rotate(0deg);  
-  }  
-  to {  
-    transform: rotate(360deg);  
-  }  
-}  
+.nav-links li {
+  font-size: 1rem;
+  display: inline-block;
+}
 
-/* HomePage styles */  
+.nav-links a {
+  /*color: #b30d0d;
+  text-decoration: none;
+  padding: 10px;
+  margin-right: 30px;
+  transition: color 0.3s ease;*/
+  padding: 10px 20px;
+  margin-right: 30px;
+  font-size: 1rem;
+  background-color: rgb(30, 86, 3);  
+  color: white;  /* Button text color */
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover {
+  background-color: #097a05;
+}
+
+/* Profile Icon */
+.nav-links a svg {
+  vertical-align: middle;
+}
+
+/* HomePage styles */
 .HomePage {
-  background:   
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),  
-    url('./bg_image.jpeg');    
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('./bg_image.jpeg');
   background-size: cover;  
   background-position: center;
   background-repeat: no-repeat;  
@@ -86,29 +84,69 @@
   justify-content: center;  
   color: white;  
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-  overflow: hidden;   
-}  
+}
 
 .HomePage h1 {  
   font-size: 3rem;  
   margin-bottom: 20px;  
-}  
+} 
 
-.HomePage p {  
-  font-size: 1.5rem;  
+/* Title styling */
+.HomePage .title {  
+  font-size: 5.5rem;  
+  font-weight: bold;
+  margin-top: -100px;  
+  color: #FFFFFF;
+  text-align: center;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);  
 }
 
+.HomePage .mission-statement {
+  font-size: 1.7rem;  
+  color: #b5b5b5;
+  max-width: 80%;
+  margin-top: -100px; 
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Get started button */
 .get-started-button {  
-  padding: 12px 24px;  
-  background-color: #069478;  
+  padding: 24px 48px;  
+  background-color: rgb(30, 86, 3);  
   color: #FFF;  
   border: none;  
   border-radius: 6px;  
   font-size: 1rem;  
   cursor: pointer;  
-  margin-top: 20px;  
+  margin-top: 100px;  
   transition: background-color 0.3s ease;  
 }  
+
 .get-started-button:hover {  
-  background-color: #057a63;  
+  background-color: #7a0511;  
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* Hide links on smaller screens */
+  }
+
+  .navbar {
+    justify-content: space-between;
+  }
+
+  .title {  
+    font-size: 2.5rem;  
+  }  
+  
+  .mission-statement {  
+    font-size: 1.2rem;  
+    padding: 0 20px;  /* Add some padding for smaller screens */
+  }  
+  
+  .get-started-button {  
+    padding: 10px 20px;  
+  }  
 }

@@ -3,9 +3,15 @@ import React from 'react';
 function HomePage({ onGetStarted }) {  
   return (  
     <div className="HomePage">  
-      <h1>Welcome to TerraFlow</h1>  
-      <p>Explore our features and enjoy your stay!</p>  
-      <button onClick={onGetStarted} style={{ padding: '10px', backgroundColor: '#676FFF', color: '#FFF', border: 'none', borderRadius: '6px' }}>  
+      <h1 className="title">TerraFlow</h1>  
+      <p className = "mission-statement">
+        Helping farmers raise funds directly from supporters to grow their businesses, strengthen their communities, 
+        and improve their financial stability for long-term success in agriculture.
+      </p>  
+      <button 
+        onClick={onGetStarted} 
+        className="get-started-button"
+      >
         Get Started  
       </button>  
     </div>  

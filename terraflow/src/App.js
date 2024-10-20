@@ -1,8 +1,9 @@
 import "./App.css";  
 import { usePrivy } from "@privy-io/react-auth";  
 import HomePage from "./HomePage";  
-//import { useState } from "react";  
+import React from "react";  
 import logo from './logo.png';
+import { FaUserCircle } from 'react-icons/fa';
 
 function App() {  
   const { ready, authenticated, user, login, logout } = usePrivy();  
@@ -18,7 +19,13 @@ function App() {
   return (  
     <div className="App">
        <nav className="navbar">  
-        <img src= {logo} alt="Terraflow Logo" className="logo" />  
+        <img src= {logo} alt="Terraflow Logo" className="logo" />
+        <ul className="nav-links">
+          <li><a href="#listings">Listings</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#profile"><FaUserCircle size={24} /></a></li>
+        </ul>
       </nav>   
       <header className="App-header">  
         {ready && authenticated ? (  

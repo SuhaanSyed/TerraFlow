@@ -20,7 +20,7 @@ root.render(
         appearance: {
           theme: 'light',
           accentColor: '#676FFF',
-          logo: 'https://your-logo-url',
+          logo: '/logo.png',
         },
         // Create embedded wallets for users who don't have a wallet
         embeddedWallets: {
