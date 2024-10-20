@@ -1,5 +1,6 @@
 import "./App.css";
 import { usePrivy } from "@privy-io/react-auth";
+import ListingsPage from "./listings"; // Ensure this import is correct
 
 function App() {
   const { ready, authenticated, user, login, logout } = usePrivy();
@@ -10,26 +11,50 @@ function App() {
   }
 
   return (
+    <div className="gradient-background">
     <div className="App">
       <header className="App-header">
-        {/* If the user is not authenticated, show a login button */}
-        {/* If the user is authenticated, show the user object and a logout button */}
         {ready && authenticated ? (
           <div>
-            <textarea
+            {/* <textarea
               readOnly
               value={JSON.stringify(user, null, 2)}
               style={{ width: "600px", height: "250px", borderRadius: "6px" }}
             />
-            <br />
-            <button onClick={logout} style={{ marginTop: "20px", padding: "12px", backgroundColor: "#069478", color: "#FFF", border: "none", borderRadius: "6px" }}>
+            <br /> */}
+            {/* <button
+              onClick={logout}
+              style={{
+                marginTop: "20px",
+                padding: "12px",
+                backgroundColor: "#069478",
+                color: "#FFF",
+                border: "none",
+                borderRadius: "6px",
+              }}
+            >
               Log Out
-            </button>
+            </button> */}
+            <ListingsPage /> {/* Show ListingsPage when authenticated */}
           </div>
         ) : (
-          <button onClick={login} style={{ padding: "12px", backgroundColor: "#069478", color: "#FFF", border: "none", borderRadius: "6px" }}>Log In</button>
+          <>
+            <button
+              onClick={login}
+              style={{
+                padding: "12px",
+                backgroundColor: "#069478",
+                color: "#FFF",
+                border: "none",
+                borderRadius: "6px",
+              }}
+            >
+              Log In
+            </button>
+          </>
         )}
       </header>
+    </div>
     </div>
   );
 }

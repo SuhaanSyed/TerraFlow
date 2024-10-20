@@ -1,38 +1,225 @@
-.App {
-  text-align: center;
+/* General Page Styling */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.gradient-background {
+  background: linear-gradient(to bottom right, darkgreen, lightgreen);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+h1 {
+  text-align: center;
+  color: white;
+  margin: 20px 0;
+}
+
+/* Listings Container */
+.listings-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.listing-tile {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  transition: transform 0.3s ease-in-out;
+  color: #000;
+}
+
+.listing-tile:hover {
+  transform: scale(1.05);
+}
+
+.listing-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+
+.listing-info {
+  margin-top: 10px;
+  text-align: center;
+  will-change: opacity, transform; /* Optimize animation */
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+button {
+  padding: 15px; /* Increase padding for larger buttons */
+  border: none;
+  border-radius: 25px; /* Rounded buttons */
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Gradient Background for Buttons */
+.stake-button {
+  background: linear-gradient(to right, #4CAF50, #45a049); /* Green gradient */
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.stake-button:hover {
+  background: linear-gradient(to right, #45a049, #4CAF50); /* Reverse gradient on hover */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.close-button {
+  background-color: #f44336; /* Red background for Cancel */
+  color: white;
+}
+
+.close-button:hover {
+  background-color: #d73227; /* Darker red on hover */
+}
+
+.delete-button {
+  background-color: #f44336; /* Red background for Delete */
+  color: white;
+  margin-left: 10px; /* Space between buttons */
+}
+
+.delete-button:hover {
+  background-color: #d73227; /* Darker red on hover */
+}
+
+/* Create Button */
+.create-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.create-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(to right, darkgoldenrod, goldenrod);
+  color: white;
+  border: none;
+  font-size: 24px;
+  line-height: 50px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the + sign */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.create-button:hover {
+  background: linear-gradient(to right, goldenrod, darkgoldenrod);
+}
+
+/* Modal Popup */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  width: 600px;
+  max-width: 100%;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form-group input[type="file"] {
+  padding: 5px;
+}
+
+/* Progress Bar */
+.progress-container {
+  margin: 15px 0;
+}
+
+progress {
+  width: 100%;
+  height: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+progress::-webkit-progress-bar {
+  background-color: #f3f3f3;
+  border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+  background-color: darkgreen;
+  border-radius: 10px;
+}
+
+textarea {
+  height: 100px;
+  resize: none;
+}
+
+/* Modal Button */
+.stake-button,
+.close-button,
+.delete-button {
+  padding: 10px 20px; /* Adjusted for consistency */
+  border-radius: 20px; /* Rounded buttons */
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.error {
+  border: 2px solid red;
+  background-color: #ffe6e6; /* Light red background */
 }
