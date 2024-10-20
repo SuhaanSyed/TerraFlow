@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSpring, animated } from "react-spring";
+import { pinJSONToIPFS, fetchFromIPFS, getPinnedFiles } from "./ipfs";
 import farm1 from './farm1.jpg';
 import farm2 from './farm2.jpg';
+import soon from './soon.png';
+import { useUser } from './UserContext';
+import Modal from 'react-modal';
+import CreateFarmerButton from "./createFarmerButton";
 
 const ListingTile = ({ listing, onDelete }) => {
     const [hover, setHover] = useState(false);
@@ -22,32 +27,34 @@ const ListingTile = ({ listing, onDelete }) => {
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
         >
-
-            <img src={listing.image} alt={listing.title} className="listing-image" />
-            <div className="button-container">
-                <button className="info-button" onClick={toggleInfo}>
-                    {expanded ? "Less Info" : "More Info"}
-                </button>
-                <button onClick={() => alert(`Stake on ${listing.title}`)} className="stake-button">
-                    Stake
-                </button>
-                <button onClick={() => onDelete(listing.title)} className="delete-button" style={{ backgroundColor: 'red', color: 'white' }}>
-                    Delete
-                </button>
-            </div>
-            {expanded && (
-                <div className="listing-description">
-                    <p><strong>Property Name:</strong> {listing.title}</p>
-                    <p><strong>Lister:</strong> {listing.listerName}</p>
-                    <p><strong>Capital Requested:</strong> ${listing.capitalRequested}</p>
-                    <p><strong>Description:</strong> {listing.description}</p>
+            <div className="listing-info">
+                <h3>{listing.title}</h3>
+                <p><strong>Lister:</strong> {listing.listerName}</p>
+                <p><strong>Capital Requested:</strong> ${listing.capitalRequested}</p>
+                <div className="button-container">
+                    <button className="info-button" onClick={toggleInfo}>
+                        {expanded ? "Less Info" : "More Info"}
+                    </button>
+                    <button onClick={() => alert(`Stake on ${listing.title}`)} className="stake-button">
+                        Stake
+                    </button>
+                    <button onClick={() => onDelete(listing.title)} className="delete-button">
+                        Delete
+                    </button>
                 </div>
-            )}
+                {expanded && (
+                    <div className="listing-description">
+                        <p><strong>Description:</strong> {listing.description}</p>
+                    </div>
+                )}
+                <CreateFarmerButton capitalRequested={listing.capitalRequested} onSuccess={(hash) => console.log(`Farmer created with hash: ${hash}`)} />
+            </div>
         </animated.div>
     );
 };
 
 const ListingsPage = () => {
+    const { user } = useUser();
     const [listings, setListings] = useState([
         {
             title: "Farm 1",
@@ -82,6 +89,31 @@ const ListingsPage = () => {
         description: false
     });
 
+    useEffect(() => {
+        const fetchPinnedFiles = async () => {
+            try {
+                const pinnedFiles = await getPinnedFiles();
+                const fetchedListings = await Promise.all(
+                    pinnedFiles.map(async (file) => {
+                        const imageData = await fetchFromIPFS(file.ipfs_pin_hash);
+                        return {
+                            title: imageData.title,
+                            image: soon,
+                            listerName: imageData.listerName,
+                            capitalRequested: imageData.capitalRequested,
+                            description: imageData.description
+                        };
+                    })
+                );
+                setListings([...listings, ...fetchedListings]);
+            } catch (error) {
+                console.error('Error fetching pinned files:', error);
+            }
+        };
+
+        fetchPinnedFiles();
+    }, []);
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNewListing({
@@ -98,7 +130,7 @@ const ListingsPage = () => {
                     ...newListing,
                     image: URL.createObjectURL(file)
                 });
-                setErrors({ ...errors, image: false }); // Reset image error
+                setErrors({ ...errors, image: false });
             } else {
                 alert("Please upload a valid image file.");
             }
@@ -115,10 +147,8 @@ const ListingsPage = () => {
             description: !newListing.description
         };
 
-        // Set error states
         setErrors(newErrors);
 
-        // Check if any field is invalid
         for (const key in newErrors) {
             if (newErrors[key]) valid = false;
         }
@@ -130,22 +160,33 @@ const ListingsPage = () => {
         return valid;
     };
 
-    const addNewListing = () => {
-        if (!validateForm()) return; // Stop if validation fails
+    const addNewListing = async () => {
+        if (!validateForm()) return;
 
-        // Add new listing to the array
-        setListings([...listings, newListing]);
+        try {
+            const listingWithUser = {
+                ...newListing,
+                walletAddress: user.wallet.address
+            };
 
-        // Reset form fields after submission
-        setNewListing({
-            title: "",
-            image: null,
-            listerName: "",
-            capitalRequested: "",
-            description: ""
-        });
+            const ipfsResponse = await pinJSONToIPFS(listingWithUser);
 
-        setShowForm(false);
+            setListings([...listings, listingWithUser]);
+            const capitalRequestedNumber = parseInt(newListing.capitalRequested, 10);
+
+            // Reset form fields after submission
+            setNewListing({
+                title: "",
+                image: null,
+                listerName: "",
+                capitalRequested: "",
+                description: ""
+            });
+
+            setShowForm(false);
+        } catch (error) {
+            console.error("Error adding new listing to IPFS: ", error);
+        }
     };
 
     const deleteListing = (title) => {
@@ -156,7 +197,7 @@ const ListingsPage = () => {
     const closeForm = () => setShowForm(false);
 
     return (
-        <div>
+        <div className="listings-page">
             <h1>TerraFlow Listings</h1>
             <div className="listings-container">
                 {listings.map((listing, index) => (
@@ -203,7 +244,6 @@ const ListingsPage = () => {
                         </div>
                         <div className="form-group">
                             <label>Capital Requested</label>
-                            <progress value={newListing.capitalRequested} max="100000"></progress>
                             <input
                                 type="number"
                                 name="capitalRequested"
