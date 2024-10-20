@@ -25,3 +25,10 @@ Nischay Rawal: legendarykrrish
 Nimra Syed: nimrasyed
 Rahul Desai: rahul7852
 Ayaan Lakhani: ayaanlakhani
+
+Team Members Instagram:
+Suhaan Syed: suhaan.sd
+Nischay Rawal: nischay_rawal
+Nimra Syed: nimra.sd
+Rahul Desai: rahul_d707
+Ayaan Lakhani: lakhaniayaan18
