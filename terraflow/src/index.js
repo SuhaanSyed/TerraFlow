@@ -7,7 +7,18 @@ import { PrivyProvider } from '@privy-io/react-auth';
 
 import App from './App';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// Make sure to import these from `@privy-io/wagmi`, not `wagmi`
+import { WagmiProvider, createConfig } from '@privy-io/wagmi';
+
+import { config } from './wagmiConfig';
+
+const queryClient = new QueryClient();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
 
 root.render(
   <React.StrictMode>
@@ -28,7 +39,12 @@ root.render(
         },
       }}
     >
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <WagmiProvider config={config}>
+          <App />
+        </WagmiProvider>
+      </QueryClientProvider>
+
     </PrivyProvider>
   </React.StrictMode>,
 );
