@@ -1,5 +1,14 @@
 import "./App.css";
 import { usePrivy } from "@privy-io/react-auth";
+import * as fcl from '@onflow/fcl';
+import react, { useState } from 'react';
+
+
+fcl.config()
+  .put("app.detail. title", "TerraFlow")
+  .put("accessNode.api", "https://rest-testnet.onflow.org")
+  .put("discovery.wallet", "https://fcl-discovery.onflow.org/testnet/authn");
+// .put("app.detail.icon", "https://raw.githubusercontent.com/ThisIsCodeXpert/Flow-NFT-DApp-Tutorial-Series/main/cats/cat5.svg");
 
 function App() {
   const { ready, authenticated, user, login, logout } = usePrivy();
