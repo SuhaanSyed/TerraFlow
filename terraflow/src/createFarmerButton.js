@@ -20,9 +20,11 @@ const CreateFarmerButton = ({ capitalRequested, onSuccess }) => {
                 args: [capitalRequested],
             });
             if (onSuccess) onSuccess(hash);
+            console.log(error);
         } catch (err) {
             console.error("Error creating farmer:", err);
         }
+
     };
 
     return (
